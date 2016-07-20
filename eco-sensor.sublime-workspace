@@ -1,0 +1,776 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"print",
+				"print"
+			],
+			[
+				"to",
+				"toInt"
+			],
+			[
+				"analog",
+				"analogRead"
+			],
+			[
+				"ex",
+				"exists"
+			],
+			[
+				"sta",
+				"startsWith"
+			],
+			[
+				"include",
+				"include"
+			],
+			[
+				"FILE",
+				"FILE_WRITE"
+			],
+			[
+				"ends",
+				"endsWith"
+			],
+			[
+				"DELAY",
+				"DELAY_MIN"
+			],
+			[
+				"anal",
+				"analogRead"
+			],
+			[
+				"se",
+				"setup	Arduino setup"
+			],
+			[
+				"bac",
+				"background-position"
+			],
+			[
+				"padd",
+				"padding-left"
+			],
+			[
+				"paddi",
+				"padding-bottom"
+			],
+			[
+				"margin",
+				"margin-top"
+			],
+			[
+				"left",
+				"margin-left"
+			],
+			[
+				"back",
+				"background"
+			],
+			[
+				"marg",
+				"margin"
+			],
+			[
+				"lis",
+				"list-style"
+			],
+			[
+				"pad",
+				"padding-top"
+			],
+			[
+				"backgroun",
+				"background-repeat"
+			],
+			[
+				"box",
+				"box-shadow"
+			],
+			[
+				"backg",
+				"background-color"
+			],
+			[
+				"push",
+				"pushbutton"
+			],
+			[
+				"R3",
+				"R3"
+			],
+			[
+				"ht",
+				"html	html"
+			],
+			[
+				"a",
+				"appendChild"
+			],
+			[
+				"get",
+				"getElementById"
+			],
+			[
+				"add",
+				"addComment"
+			],
+			[
+				"on",
+				"onclick	Attr"
+			],
+			[
+				"text",
+				"text-decoration"
+			],
+			[
+				"fon",
+				"font-size"
+			],
+			[
+				"font",
+				"font-family"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"tex",
+				"text-align"
+			],
+			[
+				"pos",
+				"pos-r	position: relative;"
+			],
+			[
+				"bo",
+				"bottom"
+			],
+			[
+				"div",
+				"div	<div>"
+			],
+			[
+				"lef",
+				"border-left"
+			],
+			[
+				"mar",
+				"margin-left"
+			],
+			[
+				"hea",
+				"header	<header>"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "wifi_client/wifi_client.ino",
+			"settings":
+			{
+				"buffer_size": 5625,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "wifi_client/ESP8266.h",
+			"settings":
+			{
+				"buffer_size": 5461,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "wifi_host/wifi_host.h",
+			"settings":
+			{
+				"buffer_size": 259,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/Applications/Arduino.app/Contents/Java/libraries/SD/examples/ReadWrite/ReadWrite.ino",
+			"settings":
+			{
+				"buffer_size": 1713,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "wifi_host/wifi_host.ino",
+			"settings":
+			{
+				"buffer_size": 3555,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "void setup()\n\n\n\n\n  // open the file. note that only one file can be open at a time,\n  // so you have to close this one before opening another.\n  //myFile = SD.open(\"test.txt\", FILE_WRITE);\n//\n  //// if the file opened okay, write to it:\n  //if (myFile) {\n  //  Serial.print(\"Writing to test.txt...\");\n  //  myFile.println(\"testing 1, 2, 3.\");\n  //  // close the file:\n  //  myFile.close();\n  //  Serial.println(\"done.\");\n  //} else {\n  //  // if the file didn't open, print an error:\n  //  Serial.println(\"error opening test.txt\");\n  //}\n//\n/*\n    if (!SD.exists(\"101\"))\n    {\n        SD.mkdir(\"101\");\n    }\n\n    myFile = SD.open(\"101/teste.txt\", FILE_WRITE);\n    if (myFile)\n    {\n        Serial.print(\"Writing to test.txt...\");\n        myFile.println(\"testing 1, 2, 3.\");\n        // close the file:\n        myFile.close();\n        Serial.println(\"done.\");\n    }else\n    {\n        // if the file didn't open, print an error:\n        Serial.println(\"error opening test.txt\");\n}*/\n\n\n\nvoid loop ()\n{\n    String ans = \"\";\n    String path = \"device/day\";\n    String file = \"time.txt\";\n\n    //myFile = SD.open(path, FILE_WRITE);\n\n    if ( wifiSerial.available() )\n    {\n        ans = wifiSerial.readString();\n        Serial.print(\"--\");\n        Serial.print(ans);\n        Serial.print(\"..\\r\\n\");\n\n        if (ans.startsWith(\"\\r\\n+IPD\"))\n        {\n            ans = removeHeader(ans);\n            Serial.println(\"header removed\");\n            if (!SD.exists(getDeviceName(ans)))\n            {\n                SD.mkdir(getDeviceName(ans));\n                Serial.println(\"directory created\");\n            }\n            //DateTime now = rtc.now();\n            //Serial.println(\"hora\");\n            //Serial.println(now.year(), DEC);\n            //Serial.println(now.month(), DEC);\n            //Serial.println(now.day(), DEC);\n\n            //DateTime dtData = timeData (ans, now);\n            //Serial.println(dtData.year(), DEC);\n            //Serial.println(dtData.month(), DEC);\n            //Serial.println(dtData.day(), DEC);\n            //while(1);\n\n\n        }\n    }\n\n    Serial.print(ans);\n    myFile.println(ans);\n    //myFile.close();\n\n}\n\nString removeHeader (String text)\n{\n    //int i = 0;\n    while (!text.startsWith(\":\")){\n        text = text.substring(1);\n    }\n    text = text.substring(1);\n\n    return text;\n}\n\nString getDeviceName (String text)\n{\n    return text.substring(0,3);\n}\n\nDateTime timeData (String text, DateTime now)\n{\n    \n    while (!text.startsWith(\",\")){\n        text = text.substring(1);\n    }\n    text = text.substring(1);\n\n    Serial.println(\"calculando hora\");\n\n    if (text.charAt(1) == ',')\n    {\n        Serial.println(\"1 digito\");\n        Serial.println(text.substring(0,1));\n        DateTime dt1 (now.unixtime() - 60 * text.substring(0,1).toInt());\n        return dt1;\n    }else if (text.charAt(2) == ',')\n    {\n        Serial.println(\"2 digito\");\n        Serial.println(text.substring(0,2));\n        DateTime dt1 (now.unixtime() - 60 * text.substring(0,2).toInt());\n        return dt1;\n    }else if (text.charAt(3) == ',')\n    {\n        Serial.println(\"3 digito\");\n        Serial.println(text.substring(0,3));\n        DateTime dt1 (now.unixtime() - 60 * text.substring(0,3).toInt());\n        return dt1;\n    }else\n    {\n        return NULL;\n    }\n}\n\n\n*/\n\nvoid loop(){\n\n    String ans = \"\";\n    String path = \"/\";\n\n	if ( wifiSerial.available() )\n    {\n        ans = wifiSerial.readString();\n        Serial.print(\"--\");\n        Serial.print(ans);\n        Serial.print(\"..\\r\\n\");\n        \n        if (ans.startsWith(\"\\r\\n+IPD\"))\n        {\n            while (!ans.startsWith(\":\")) //tirar +IPD da resposta\n            {\n                ans = ans.substring(1);\n                Serial.println(\"tratando resposta\");\n            }\n            \n            ans = ans.substring(1); //tirar os dois pontos da resposta\n\n            if (!SD.exists(ans.substring(0,3))) // criar o diretorio do dispositivo\n            {\n                SD.mkdir(ans.substring(0,3));\n            }\n            long time = getTime(); // pega a hora\n\n            //path = ans.substring(0,3) + \"/\" + String(time) + \".txt\";\n            path = \"1607091.txt\";\n            myFile = SD.open(path, FILE_WRITE);\n            Serial.print(\"escrevendo em\");\n            Serial.print(path);\n            //while(1);\n            if (myFile)\n            {\n                Serial.print(\"escrevendo resposta...\");\n                myFile.println(ans);\n                // close the file:\n                Serial.println(\"Escrevi:\");\n                Serial.println(ans);\n                Serial.println(\"done.\");\n                myFile.close();\n            }else\n            {\n                // if the file didn't open, print an error:\n                Serial.println(\"error opening SD card\");\n            }\n\n            while(1);\n            while(!ans.endsWith(\"0,CLOSED\\r\\n\"))\n            {\n                ans = wifiSerial.readString();\n                path = ans.substring(0,3) + \"/\" + String(time) + \".txt\";   \n                myFile = SD.open(path, FILE_WRITE);\n                Serial.print(\"escrevendo em\");\n                Serial.print(path);\n                //while(1);\n                if (myFile)\n                {\n                    Serial.print(\"escrevendo resposta...\");\n                    myFile.println(ans);\n                    // close the file:\n                    Serial.println(\"Escrevi:\");\n                    Serial.println(ans);\n                    Serial.println(\"done.\");\n                    myFile.close();\n                }else\n                {\n                    // if the file didn't open, print an error:\n                    Serial.println(\"error opening SD card\");\n                }\n\n            }\n        }\n\n    }\n \n    // listen for user input and send it to the ESP8266\n    if ( Serial.available() )       {  wifiSerial.println( Serial.readString() );  }\n\n    if (digitalRead(pushbutton)==0) //if (position==ok) send signal\n    {\n    	for (int i = 0; i < 3; i++)\n    	{\n			irsend.sendSony(0xFFC23D, 24);\n			delay(40);\n		}\n		delay(5000);\n    }\n\n}\n\nint getTime(){\n    return 1300;\n}\n\nint getDate(){\n    return 160701;\n}\n\n            //Serial.println(\"hora agora\");\n            //Serial.print(now.year());\n            //Serial.print(\"/\");\n            //Serial.print(now.month());\n            //Serial.print(\"/\");\n            //Serial.print(now.day());\n            //Serial.print(\",\");\n            //Serial.print(now.hour());\n            //Serial.print(\":\");\n            //Serial.print(now.minute());\n            //Serial.println(\"\\n\\nhora data\");\n            //Serial.print(dtData.year());\n            //Serial.print(\"/\");\n            //Serial.print(dtData.month());\n            //Serial.print(\"/\");\n            //Serial.print(dtData.day());\n            //Serial.print(\",\");\n            //Serial.print(dtData.hour());\n            //Serial.print(\":\");\n            //Serial.print(dtData.minute());\n\n\nint timeData\n\n    //int number = 1;\n    //while (!text.startsWith(\",\"))\n    //{\n    //    text = text.substring(1);\n    //}\n//\n    //text = text.substring(1);\n//\n    //Serial.println(\"calculando hora\");\n//\n    //if (text.charAt(1) == ',')\n    //{\n    //    Serial.printf(\"%03d digito\", number);\n    //    Serial.println(text.substring(0,1));\n//\n    //    return text.substring(0,1).toInt();\n    //}else if (text.charAt(2) == ',')\n    //{\n    //    Serial.println(\"2 digitos\");\n    //    Serial.println(text.substring(0,2));\n    //    return text.substring(0,2).toInt();\n    //}else if (text.charAt(3) == ',')\n    //{\n    //    Serial.println(\"3 digito\");\n    //    Serial.println(text.substring(0,3));\n    //    return text.substring(0,3).toInt();\n    //}else if (text.charAt(4) == ',')\n    //{\n    //    Serial.println(\"4 digito\");\n    //    Serial.println(text.substring(0,4));\n    //    return text.substring(0,4).toInt();\n    //}else\n    //{\n    //    return NULL;\n    //}",
+			"settings":
+			{
+				"buffer_size": 7888,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "#include \"ESP8266.h\"\n#include <IRremote.h>\n#include <SPI.h>\n#include <SD.h>\n#include <Wire.h>\n#include \"RTClib.h\"\n#include \"wifi_host.h\"\n\nRTC_DS1307 rtc;\n\n\nvoid setup(){\n    pinMode(wifiEnablePin, OUTPUT);\n    pinMode(pushbutton, INPUT);\n    analogWrite(A2, 0);\n    analogWrite(A3, 1023);\n\n	esp8266_enable(1);\n    delay(1000);\n	\n	Serial.begin(9600);\n    Serial.println(\"Arduino Serial channel started\");\n    \n    //wifiSerial.begin(115200);\n    //wifiSerial.setTimeout(1000);\n    //wifiSerial.println(\"AT+CIOBAUD=9600\");\n    Serial.println(\"Wifi Module Serial channel started\");\n    wifiSerial.begin(9600);\n\n    wifiSerial.println(\"AT+CIPMUX=1\");\n    Serial.print(wifiSerial.readString());\n    wifiSerial.println(\"AT+CIPSERVER=1,1001\");\n\n      Serial.print(\"Initializing SD card...\");\n\n    if (!SD.begin(10)) \n    {\n        Serial.println(\"initialization failed!\");\n        return;\n    }\n    Serial.println(\"...done.\");\n\n    if (! rtc.begin()) \n    {\n        Serial.println(\"Couldn't find RTC\");\n        while (1);\n    }\n\n}\n\nvoid loop () \n{\n    IRsend irsend;\n\n    if ( wifiSerial.available() )\n    {\n        String ans = wifiSerial.readString();\n        if (ans.startsWith(\"\\r\\n+IPD\"))\n        {\n            removeHeader(ans);\n            //Serial.printf(\"%03d\",ans.length());\n            \n            if(ans.endsWith(\"0,CLOSED\\r\\n\"))\n            {\n                ans.remove(ans.length() - 10);\n            }            \n            \n            DateTime now = rtc.now();\n            //TimeSpan(D,H,M,S)\n            DateTime dtData = now - TimeSpan(0,0,timeData (ans),0);\n            String device = getDeviceName(ans);\n            int data = getData (ans);\n\n            saveData(device, dtData, data);\n            \n        }\n\n    }\n\n    // listen for user input and send it to the ESP8266\n    if ( Serial.available() )       {  wifiSerial.write( Serial.read() );  }\n\n    if (digitalRead(pushbutton)==0) //if (position==ok) send signal\n    {\n        for (int i = 0; i < 3; i++)\n        {\n            irsend.sendSony(0xFFC23D, 24);\n            delay(40);\n        }\n        delay(5000);\n    }\n}\n\nint removeHeader (String &text)\n{\n    int index1 = 0;\n    while(text.charAt(index1) != ':')\n    {\n        index1 += 1;\n    }\n    text = text.substring(index1 + 1);\n    return 0;\n}\n\nString getDeviceName (String &text)\n{\n    return text.substring(0,3);\n}\n\nint timeData (String &text)\n{\n    int index1 = 0;\n    int index2 = text.length();\n\n    while(text.charAt(index1) != ',')\n    {\n        index1 += 1;\n    }\n\n    while(text.charAt(index2) != ',')\n    {\n        index2 -= 1;\n    }\n\n    return text.substring(index1 + 1, index2 + 1).toInt();\n}\n\nint getData (String &text)\n{\n    int i = text.length();\n    while(text.charAt(i) != ',')\n    {\n        i -= 1;\n    }\n    return text.substring(i+1).toInt();\n}\n\nint saveData (String name, DateTime dtData, int data)\n{\n    File myFile = SD.open(\"test.txt\", FILE_WRITE);\n\n    Serial.print(\"Writing to test.txt...\");\n    myFile.printf(\"testing 1, 2, 3.\");\n    Serial.println(\"done.\");\n    delay(500);\n\n\n    if (myFile)\n    {\n        myFile.print(name);\n        myFile.print(\",\");\n        myFile.print(dtData.year());\n        myFile.print(dtData.month());\n        myFile.print(dtData.day());\n        myFile.print(dtData.hour());\n        myFile.print(dtData.minute());\n        myFile.print(\",\");\n        myFile.println(data);\n        Serial.println(\"done.\");\n        myFile.close();\n    }else\n    {\n        // if the file didn't open, print an error:\n        Serial.println(\"error opening SD card\");\n    }\n\n}",
+			"settings":
+			{
+				"buffer_size": 3540,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "re",
+		"selected_items":
+		[
+			[
+				"re",
+				"Package Control: Remove Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Remove Package"
+			],
+			[
+				"pa",
+				"Package Control: Install Package"
+			],
+			[
+				"sftp",
+				"SFTP: Browse Server…"
+			],
+			[
+				"pac",
+				"Package Control: Remove Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"About"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/phelipe/OneDrive/Documentos/Arduino/eco-sensor",
+		"/Users/phelipe/OneDrive/Documentos/Arduino/eco-sensor/wifi_client",
+		"/Users/phelipe/OneDrive/Documentos/Arduino/eco-sensor/wifi_host",
+		"/Users/phelipe/OneDrive/Documentos/Arduino/ir-test",
+		"/Users/phelipe/OneDrive/Documentos/Arduino/ir-test/ir_test_cli",
+		"/Users/phelipe/OneDrive/Documentos/Arduino/ir-test/ir_test_ser"
+	],
+	"file_history":
+	[
+		"/Users/phelipe/OneDrive/Documentos/Arduino/eco-sensor/wifi_client/wifi_client.h",
+		"/Users/phelipe/OneDrive/Documentos/Arduino/libraries/RTClib/examples/ds1307/ds1307.ino",
+		"/Users/phelipe/OneDrive/Documentos/Arduino/eco-sensor/wifi_client/ESP8266.h",
+		"/Users/phelipe/OneDrive/Documentos/Arduino/libraries/RTClib/examples/datecalc/datecalc.ino",
+		"/Users/phelipe/OneDrive/Documentos/Arduino/eco-sensor/wifi_host/wifi_host.ino",
+		"/Users/phelipe/OneDrive/Documentos/Arduino/eco-sensor/wifi_client/ESP8266.c",
+		"/Users/phelipe/OneDrive/Documentos/Arduino/eco-sensor/wifi_client/ESP8266.cpp",
+		"/Users/phelipe/OneDrive/Documentos/Arduino/eco-sensor/ESP8266.h",
+		"/Users/phelipe/OneDrive/Documentos/Arduino/eco-sensor/ESP8266.cpp",
+		"/Users/phelipe/OneDrive/Documentos/Arduino/eco-sensor/ESP8266.c",
+		"/Users/phelipe/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/phelipe/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/phelipe/Library/Application Support/Sublime Text 3/Packages/RawLineEdit/raw_line_edit.sublime-settings",
+		"/Users/phelipe/Library/Application Support/Sublime Text 3/Packages/User/raw_line_edit.sublime-settings",
+		"/Users/phelipe/Library/Application Support/Sublime Text 3/Packages/LineEndings/LineEndings.sublime-settings",
+		"/Users/phelipe/OneDrive/Documentos/Arduino/ir-test/ir_test_cli/ir_test_cli.ino",
+		"/Users/phelipe/OneDrive/Documentos/Arduino/ir-test/ir_test_ser/ir_test_ser.ino",
+		"/Users/phelipe/OneDrive/Documentos/Arduino/eco-sensor/wifi_client/ir_test_cli.ino",
+		"/Users/phelipe/OneDrive/Documentos/Arduino/eco-sensor/wifi_host/ir_test_ser.ino",
+		"/Users/phelipe/webpage/public_html/projects/jiffygram-profile.html",
+		"/Users/phelipe/Documents/Arduino/sketches/sketches.ino",
+		"/Users/phelipe/Documents/Arduino/alcoholSensor/alcoholSensor.ino",
+		"/Users/phelipe/Library/Application Support/Sublime Text 3/Packages/Stino/Default (OSX).sublime-keymap",
+		"/Users/phelipe/Documents/Arduino/serial_wifi/serial_wifi.ino",
+		"/Users/phelipe/Documents/Arduino/libraries/IRremote/examples/IRrecvDemo/IRrecvDemo.ino",
+		"/Users/phelipe/Library/Application Support/Sublime Text 3/Packages/User/Package Control.sublime-settings",
+		"/Users/phelipe/Library/Application Support/Sublime Text 3/Packages/Package Control/Package Control.sublime-settings",
+		"/Users/phelipe/Library/Application Support/Sublime Text 3/Installed Packages/Package Control.sublime-package",
+		"/Users/phelipe/Library/Application Support/Sublime Text 3/Packages/User/Stino/Preferences.stino-settings",
+		"/Users/phelipe/Downloads/final/pacific.css",
+		"/Users/phelipe/Downloads/final/index.html",
+		"/Users/phelipe/Downloads/final/yurts.html",
+		"/Users/phelipe/webpage/public_html/web-page-design/final-exam/index.html",
+		"/Users/phelipe/webpage/public_html/layout/index.html",
+		"/Users/phelipe/webpage/public_html/layout/2column.css",
+		"/Users/phelipe/Google Drive/2016_1/micro lab/lab7-semaforo/lab4.s",
+		"/Users/phelipe/Embedded Linux/sftp-config.json",
+		"/Users/phelipe/Google Drive/2016_1/micro lab/Lab6 - stopwatch/lab5/lab5.s",
+		"/Users/phelipe/Google Drive/2016_1/micro lab/lab7/lab4.s",
+		"/Users/phelipe/Google Drive/2016_1/micro lab/Lab6/lab5/lab5.s",
+		"/Applications/TeX/LuaTeX-and-XeTeX/ConTeXt-hagen.tex",
+		"/Users/phelipe/GitHub/ELSpring2016/misc/Assignment2/Exercise_TerminalSession.txt",
+		"/Volumes/PHELIPE/log.txt",
+		"/Users/phelipe/GitHub/ELSpring2016/misc/Assignment2/Answers.txt",
+		"/Users/phelipe/GitHub/MSci_Work/glagsowPaper/IoTSecurityIntegrationPaper.tex",
+		"/Users/phelipe/Documents/DSD/shift_reg.v",
+		"/Users/phelipe/Documents/DSD/FSM.v",
+		"/Users/phelipe/Documents/DSD/serial.v",
+		"/Users/phelipe/webpage/sftp-config.json",
+		"/Users/phelipe/webpage/public_html/projects/jiffygram.css",
+		"/Users/phelipe/webpage/public_html/web-page-design/to-do-list/index.html",
+		"/Users/phelipe/webpage/public_html/humans/links.json",
+		"/Users/phelipe/webpage/public_html/projects/jiffygram.js",
+		"/Users/phelipe/webpage/public_html/data/links.json",
+		"/Users/phelipe/webpage/public_html/humans/links.html",
+		"/Users/phelipe/webpage/public_html/web-page-design/jso/objects.js",
+		"/Users/phelipe/webpage/public_html/web-page-design/to-do-list/todo.js",
+		"/Users/phelipe/webpage/public_html/projects/jiffygram.html",
+		"/Users/phelipe/webpage/public_html/web-page-design/jso/index.html",
+		"/Users/phelipe/webpage/public_html/notes.css",
+		"/Users/phelipe/webpage/public_html/notes.html",
+		"/Users/phelipe/webpage/public_html/table.css",
+		"/Users/phelipe/webpage/public_html/projects/jiffygram-profile.css",
+		"/Users/phelipe/webpage/public_html/projects/jiffygram-v2.css",
+		"/Users/phelipe/webpage/public_html/projects/jiffygram-v2.html",
+		"/Users/phelipe/webpage/public_html/images/derp1.png",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1443037244/New Paltz/home/fernandp5/public_html/projects/resume2025.css",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1443036859/New Paltz/home/fernandp5/public_html/projects/resume2025.html",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1442529839/New Paltz/home/fernandp5/public_html/guilherme/index.html",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1442533011/New Paltz/home/fernandp5/public_html/parabens/index.html",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1442528974/New Paltz/home/fernandp5/public_html/humans/links2.html",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1442460747/New Paltz/home/fernandp5/public_html/projects/resume2025.html",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1442460772/New Paltz/home/fernandp5/public_html/projects/resume2025.css",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1442528925/New Paltz/home/fernandp5/public_html/guilherme/index.html",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1442436014/New Paltz/home/fernandp5/public_html/projects/resume2025.css",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1442435978/New Paltz/home/fernandp5/public_html/projects/resume2025.html",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1442245280/New Paltz/home/fernandp5/public_html/exercises/resume.html",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1442245304/New Paltz/home/fernandp5/public_html/exercises/schedule.html",
+		"/Users/phelipe/Downloads/quadroots.m",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1441676282/New Paltz/home/fernandp5/public_html/exercises/pizza.html",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1441676301/New Paltz/home/fernandp5/public_html/humans/links.html",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1441676810/New Paltz/home/fernandp5/public_html/exercises/schedule.html",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1441254325/New Paltz/home/fernandp5/public_html/exercises/pizza.html",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1441254403/New Paltz/home/fernandp5/public_html/humans/index.html",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1441254382/New Paltz/home/fernandp5/public_html/humans/links.html",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1441254372/New Paltz/home/fernandp5/public_html/exercises/schedule.html",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1441252448/New Paltz/home/fernandp5/public_html/humans/index.html",
+		"/var/folders/q8/_jdwyvkx4z1f225lvz_rrtbr0000gn/T/sublime-sftp-browse-1441252357/New Paltz/home/fernandp5/public_html/humans/index.html",
+		"/Users/phelipe/Library/Application Support/Sublime Text 3/Packages/User/sftp_servers/New Paltz"
+	],
+	"find":
+	{
+		"height": 36.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"esp82",
+			"taconteceno",
+			"500",
+			"\\n",
+			"\\r\\n",
+			"DELAY",
+			"tab",
+			"\npi@raspberrypi:~$",
+			"scrip",
+			"jiffigram",
+			"profile-img"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			";"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "wifi_client/wifi_client.ino",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5625,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4771,
+								4771
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/User/Stino/Arduino.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2554.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "wifi_client/ESP8266.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5461,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1937,
+								1937
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 407.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "wifi_host/wifi_host.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 259,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								76,
+								76
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/Applications/Arduino.app/Contents/Java/libraries/SD/examples/ReadWrite/ReadWrite.ino",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1713,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								883,
+								883
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/User/Stino/Arduino.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 195.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 4,
+					"file": "wifi_host/wifi_host.ino",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3555,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1304,
+								1304
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/User/Stino/Arduino.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 736.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7888,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5696,
+								5158
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"syntax": "Packages/User/Stino/Arduino.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2613.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3540,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3540,
+								3540
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"syntax": "Packages/User/Stino/Arduino.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1807.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.632528136973,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.sftp":
+	{
+		"height": 100.0
+	},
+	"output.upload|/Users/phelipe/Documents/Arduino/sketches|1465233939.043745":
+	{
+		"height": 100.0
+	},
+	"pinned_build_system": "",
+	"project": "eco-sensor.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 191.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
